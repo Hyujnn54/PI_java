@@ -54,14 +54,44 @@ public class InterviewService {
         return list;
     }
 
-    public static void updateDate(int id, LocalDateTime newDate) {
-        String sql = "UPDATE interview SET scheduled_at=?, status='RESCHEDULED' WHERE id=?";
+    public static void updateInterview(int id, Interview i) {
+        String sql = "UPDATE interview SET application_id=?, recruiter_id=?, scheduled_at=?, duration_minutes=?, mode=?, status=? WHERE id=?";
+
+        try (PreparedStatement ps = cnx.prepareStatement(sql)) {
+            ps.setInt(1, i.getApplicationId());
+            ps.setInt(2, i.getRecruiterId());
+            ps.setTimestamp(3, Timestamp.valueOf(i.getScheduledAt()));
+            ps.setInt(4, i.getDurationMinutes());
+            ps.setString(5, i.getMode());
+            ps.setString(6, i.getStatus());
+            ps.setInt(7, id);
+            ps.executeUpdate();
+            System.out.println("Interview updated");
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    public static void approveRescheduleRequest(int interviewId, LocalDateTime newDate) {
+        String sql = "UPDATE interview SET scheduled_at=?, status='APPROVED' WHERE id=?";
 
         try (PreparedStatement ps = cnx.prepareStatement(sql)) {
             ps.setTimestamp(1, Timestamp.valueOf(newDate));
-            ps.setInt(2, id);
+            ps.setInt(2, interviewId);
             ps.executeUpdate();
-            System.out.println("Interview updated");
+            System.out.println("Reschedule request approved");
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+    }
+
+    public static void rejectRescheduleRequest(int interviewId) {
+        String sql = "UPDATE interview SET status='REJECTED' WHERE id=?";
+
+        try (PreparedStatement ps = cnx.prepareStatement(sql)) {
+            ps.setInt(1, interviewId);
+            ps.executeUpdate();
+            System.out.println("Reschedule request rejected");
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }

@@ -23,8 +23,20 @@ public class InterviewRescheduleRequest {
     }
 
     public int getInterviewId() { return interviewId; }
+    public void setInterviewId(int interviewId) { this.interviewId = interviewId; }
+
     public int getCandidateId() { return candidateId; }
+    public void setCandidateId(int candidateId) { this.candidateId = candidateId; }
+
     public LocalDateTime getRequestedDateTime() { return requestedDateTime; }
+    public void setRequestedDateTime(LocalDateTime requestedDateTime) { this.requestedDateTime = requestedDateTime; }
+
     public String getReason() { return reason; }
+    public void setReason(String reason) { this.reason = reason; }
+
     public String getStatus() { return status; }
+    public void setStatus(String status) { this.status = status; }
+
+    public int getId() { return id; }
+    public void setId(int id) { this.id = id; }
 }
