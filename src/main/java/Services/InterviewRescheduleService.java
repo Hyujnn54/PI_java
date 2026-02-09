@@ -3,9 +3,9 @@ package Services;
 import Models.InterviewRescheduleRequest;
 import Utils.MyDatabase;
 
-import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.SQLException;
+import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class InterviewRescheduleService {
 
@@ -26,6 +26,29 @@ public class InterviewRescheduleService {
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
+    }
+
+    public static List<InterviewRescheduleRequest> getAll() {
+        List<InterviewRescheduleRequest> list = new ArrayList<>();
+        String sql = "SELECT * FROM interview_reschedule_request";
+
+        try (Statement st = cnx.createStatement();
+             ResultSet rs = st.executeQuery(sql)) {
+
+            while (rs.next()) {
+                InterviewRescheduleRequest r = new InterviewRescheduleRequest();
+                r.setId(rs.getInt("id"));
+                r.setInterviewId(rs.getInt("interview_id"));
+                r.setCandidateId(rs.getInt("candidate_id"));
+                r.setRequestedDateTime(rs.getTimestamp("requested_datetime").toLocalDateTime());
+                r.setReason(rs.getString("reason"));
+                r.setStatus(rs.getString("status"));
+                list.add(r);
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        return list;
     }
 
     public static void updateRequest(int id, InterviewRescheduleRequest r) {

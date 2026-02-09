@@ -6,6 +6,9 @@ import Utils.MyDatabase;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
+import java.sql.*;
+import java.util.ArrayList;
+import java.util.List;
 
 public class InterviewFeedbackService {
 
@@ -29,6 +32,32 @@ public class InterviewFeedbackService {
         } catch (SQLException e) {
             System.out.println(e.getMessage());
         }
+    }
+
+    public static List<InterviewFeedback> getAll() {
+        List<InterviewFeedback> list = new ArrayList<>();
+        String sql = "SELECT * FROM interview_feedback";
+
+        try (Statement st = cnx.createStatement();
+             ResultSet rs = st.executeQuery(sql)) {
+
+            while (rs.next()) {
+                InterviewFeedback f = new InterviewFeedback();
+                f.setId(rs.getInt("id"));
+                f.setInterviewId(rs.getInt("interview_id"));
+                f.setRecruiterId(rs.getInt("recruiter_id"));
+                f.setTechnicalScore(rs.getInt("technical_score"));
+                f.setCommunicationScore(rs.getInt("communication_score"));
+                f.setCultureFitScore(rs.getInt("culture_fit_score"));
+                f.setOverallScore(rs.getInt("overall_score"));
+                f.setDecision(rs.getString("decision"));
+                f.setComment(rs.getString("comment"));
+                list.add(f);
+            }
+        } catch (SQLException e) {
+            System.out.println(e.getMessage());
+        }
+        return list;
     }
 
     public static void updateFeedback(int id, InterviewFeedback f) {

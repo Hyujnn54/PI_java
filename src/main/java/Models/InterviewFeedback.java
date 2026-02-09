@@ -28,12 +28,30 @@ public class InterviewFeedback {
     }
 
     // Getters & Setters
+    public int getId() { return id; }
+    public void setId(int id) { this.id = id; }
+
     public int getInterviewId() { return interviewId; }
+    public void setInterviewId(int interviewId) { this.interviewId = interviewId; }
+
     public int getRecruiterId() { return recruiterId; }
+    public void setRecruiterId(int recruiterId) { this.recruiterId = recruiterId; }
+
     public int getTechnicalScore() { return technicalScore; }
+    public void setTechnicalScore(int technicalScore) { this.technicalScore = technicalScore; }
+
     public int getCommunicationScore() { return communicationScore; }
+    public void setCommunicationScore(int communicationScore) { this.communicationScore = communicationScore; }
+
     public int getCultureFitScore() { return cultureFitScore; }
+    public void setCultureFitScore(int cultureFitScore) { this.cultureFitScore = cultureFitScore; }
+
     public int getOverallScore() { return overallScore; }
+    public void setOverallScore(int overallScore) { this.overallScore = overallScore; }
+
     public String getDecision() { return decision; }
+    public void setDecision(String decision) { this.decision = decision; }
+
     public String getComment() { return comment; }
+    public void setComment(String comment) { this.comment = comment; }
 }
